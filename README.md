@@ -1,6 +1,7 @@
 # stm32f4_disco_ili9341  
 ide : System Workbench AC6  
-ILI9341 pin assign:
+Board : STM32F4DISCOVERY  
+ILI9341 pin assignments:  
    * rst : pe10
    * cs  : pe11
    * dc  : pe12
