@@ -9,3 +9,4 @@ ILI9341 pin assignments:
    * mosi: pa7
    * miso: pa6
    * sck : pa5
+![](IMG_6787.JPG)
