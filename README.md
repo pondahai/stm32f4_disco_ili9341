@@ -1,6 +1,6 @@
 # stm32f4_disco_ili9341  
 stm32f407 + ili9341 LCD  
-ide : System Workbench AC6  
+ide : SW4STM32  
 Board : STM32F4DISCOVERY  
 ILI9341 pin assignments:  
    * vcc : 3V
