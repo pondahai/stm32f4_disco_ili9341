@@ -3,6 +3,8 @@ stm32f407 + ili9341 LCD
 ide : System Workbench AC6  
 Board : STM32F4DISCOVERY  
 ILI9341 pin assignments:  
+   * vcc : 3V
+   * led : 3V
    * rst : pe10
    * cs  : pe11
    * dc  : pe12
