@@ -1,4 +1,5 @@
 /* vim: set ai et ts=4 sw=4: */
+#include <stdlib.h>
 #include "stm32f4xx_hal.h"
 #include "ili9341.h"
 
@@ -197,7 +198,9 @@ void ILI9341_Init() {
     // TURN ON DISPLAY
     ILI9341_WriteCommand(0x29);
 
+    //ILI9341_Unselect();
     // MADCTL
+    //ILI9341_Select();
     ILI9341_WriteCommand(0x36);
     {
         uint8_t data[] = { ILI9341_ROTATION };
@@ -219,7 +222,64 @@ void ILI9341_DrawPixel(uint16_t x, uint16_t y, uint16_t color) {
 
     ILI9341_Unselect();
 }
+void ILI9341_DrawLine(uint16_t x0, uint16_t y0, uint16_t x1, uint16_t y1, uint16_t color)
+{
+    // calculate dx & dy
+    int dx = x1 - x0;
+    int dy = y1 - y0;
 
+    // calculate steps required for generating pixels
+    int steps = abs(dx) > abs(dy) ? abs(dx) : abs(dy);
+
+    // calculate increment in x & y for each steps
+    float Xinc = dx / (float) steps;
+    float Yinc = dy / (float) steps;
+
+    // Put pixel for each step
+    float X = x0;
+    float Y = y0;
+    for (int i = 0; i <= steps; i++)
+    {
+    	ILI9341_DrawPixel(X,Y,color);
+        X += Xinc;           // increment in x at each step
+        Y += Yinc;           // increment in y at each step
+    }
+
+
+
+//    int dx  = x1 - x0,
+//        dy  = y1 - y0,
+//        y   = y0,
+//        eps = 0;
+//
+//    for ( int x = x0; x <= x1; x++ )  {
+//    	ILI9341_DrawPixel(x,y,color);
+//      eps += dy;
+//      if ( (eps << 1) >= dx )  {
+//        y++;  eps -= dx;
+//      }
+//    }
+
+
+
+//	//float dx, dy, p, x, y;
+//	//
+//    if((x0 >= ILI9341_WIDTH) || (y0 >= ILI9341_HEIGHT)) return;
+//    if((x0 + x1 - 1) >= ILI9341_WIDTH) x1 = ILI9341_WIDTH - x0;
+//    if((y0 + y1 - 1) >= ILI9341_HEIGHT) y1 = ILI9341_HEIGHT - y0;
+//
+//    int dx = abs(x1-x0), sx = x0<x1 ? 1 : -1;
+//    int dy = abs(y1-y0), sy = y0<y1 ? 1 : -1;
+//    int err = (dx>dy ? dx : -dy)/2, e2;
+//
+//    for(;;){
+//    	ILI9341_DrawPixel(x0,y0,color);
+//      if (x0==x1 && y0==y1) break;
+//      e2 = err;
+//      if (e2 >-dx) { err -= dy; x0 += sx; }
+//      if (e2 < dy) { err += dx; y0 += sy; }
+//    }
+}
 static void ILI9341_WriteChar(uint16_t x, uint16_t y, char ch, FontDef font, uint16_t color, uint16_t bgcolor) {
     uint32_t i, b, j;
 

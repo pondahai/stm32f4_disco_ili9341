@@ -24,6 +24,10 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+#include <stdlib.h>
+#include <stdio.h>
+#include <math.h>
+#include "arm_math.h"
 #include "ili9341.h"
 //#include "ili9341_touch.h"
 #include "fonts.h"
@@ -80,7 +84,7 @@ void lcd_loop() {
         return;
     }
 
-    hspi1.Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_2;
+//    hspi1.Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_2;
 
     if(HAL_SPI_Init(&hspi1) != HAL_OK) {
 //        UART_Printf("HAL_SPI_Init failed!\r\n");
@@ -90,79 +94,190 @@ void lcd_loop() {
     // Check border
     ILI9341_FillScreen(ILI9341_BLACK);
 
-    for(int x = 0; x < ILI9341_WIDTH; x++) {
-        ILI9341_DrawPixel(x, 0, ILI9341_RED);
-        ILI9341_DrawPixel(x, ILI9341_HEIGHT-1, ILI9341_RED);
-    }
+//    for(int x = 0; x < ILI9341_WIDTH; x++) {
+//        ILI9341_DrawPixel(x, 0, ILI9341_RED);
+//        ILI9341_DrawPixel(x, ILI9341_HEIGHT-1, ILI9341_RED);
+//    }
+//
+//    for(int y = 0; y < ILI9341_HEIGHT; y++) {
+//        ILI9341_DrawPixel(0, y, ILI9341_RED);
+//        ILI9341_DrawPixel(ILI9341_WIDTH-1, y, ILI9341_RED);
+//    }
 
-    for(int y = 0; y < ILI9341_HEIGHT; y++) {
-        ILI9341_DrawPixel(0, y, ILI9341_RED);
-        ILI9341_DrawPixel(ILI9341_WIDTH-1, y, ILI9341_RED);
-    }
-
-    HAL_Delay(3000);
+//    HAL_Delay(3000);
 
     // Check fonts
-    ILI9341_FillScreen(ILI9341_BLACK);
-    ILI9341_WriteString(0, 0, "Font_7x10, red on black, lorem ipsum dolor sit amet", Font_7x10, ILI9341_RED, ILI9341_BLACK);
-    ILI9341_WriteString(0, 3*10, "Font_11x18, green, lorem ipsum dolor sit amet", Font_11x18, ILI9341_GREEN, ILI9341_BLACK);
-    ILI9341_WriteString(0, 3*10+3*18, "Font_16x26, blue, lorem ipsum dolor sit amet", Font_16x26, ILI9341_BLUE, ILI9341_BLACK);
+//    ILI9341_FillScreen(ILI9341_BLACK);
+//    ILI9341_WriteString(0, 0, "Font_7x10, red on black, lorem ipsum dolor sit amet", Font_7x10, ILI9341_RED, ILI9341_BLACK);
+//    ILI9341_WriteString(0, 3*10, "Font_11x18, green, lorem ipsum dolor sit amet", Font_11x18, ILI9341_GREEN, ILI9341_BLACK);
+//    ILI9341_WriteString(0, 3*10+3*18, "Font_16x26, blue, lorem ipsum dolor sit amet", Font_16x26, ILI9341_BLUE, ILI9341_BLACK);
 
-    HAL_Delay(1000);
-    ILI9341_InvertColors(true);
-    HAL_Delay(1000);
-    ILI9341_InvertColors(false);
+//    HAL_Delay(1000);
+//    ILI9341_InvertColors(true);
+//    HAL_Delay(1000);
+//    ILI9341_InvertColors(false);
 
-    HAL_Delay(5000);
+//    HAL_Delay(5000);
 
     // Check colors
-    ILI9341_FillScreen(ILI9341_WHITE);
-    ILI9341_WriteString(0, 0, "WHITE", Font_11x18, ILI9341_BLACK, ILI9341_WHITE);
-    HAL_Delay(500);
+//    ILI9341_FillScreen(ILI9341_WHITE);
+//    ILI9341_WriteString(0, 0, "WHITE", Font_11x18, ILI9341_BLACK, ILI9341_WHITE);
+//    HAL_Delay(500);
+//
+//    ILI9341_FillScreen(ILI9341_BLUE);
+//    ILI9341_WriteString(0, 0, "BLUE", Font_11x18, ILI9341_BLACK, ILI9341_BLUE);
+//    HAL_Delay(500);
+//
+//    ILI9341_FillScreen(ILI9341_RED);
+//    ILI9341_WriteString(0, 0, "RED", Font_11x18, ILI9341_BLACK, ILI9341_RED);
+//    HAL_Delay(500);
+//
+//    ILI9341_FillScreen(ILI9341_GREEN);
+//    ILI9341_WriteString(0, 0, "GREEN", Font_11x18, ILI9341_BLACK, ILI9341_GREEN);
+//    HAL_Delay(500);
+//
+//    ILI9341_FillScreen(ILI9341_CYAN);
+//    ILI9341_WriteString(0, 0, "CYAN", Font_11x18, ILI9341_BLACK, ILI9341_CYAN);
+//    HAL_Delay(500);
+//
+//    ILI9341_FillScreen(ILI9341_MAGENTA);
+//    ILI9341_WriteString(0, 0, "MAGENTA", Font_11x18, ILI9341_BLACK, ILI9341_MAGENTA);
+//    HAL_Delay(500);
+//
+//    ILI9341_FillScreen(ILI9341_YELLOW);
+//    ILI9341_WriteString(0, 0, "YELLOW", Font_11x18, ILI9341_BLACK, ILI9341_YELLOW);
+//    HAL_Delay(500);
+//
+//    ILI9341_FillScreen(ILI9341_BLACK);
+//    ILI9341_WriteString(0, 0, "BLACK", Font_11x18, ILI9341_WHITE, ILI9341_BLACK);
+//    HAL_Delay(500);
 
-    ILI9341_FillScreen(ILI9341_BLUE);
-    ILI9341_WriteString(0, 0, "BLUE", Font_11x18, ILI9341_BLACK, ILI9341_BLUE);
-    HAL_Delay(500);
+//    ILI9341_DrawImage((ILI9341_WIDTH - 240) / 2, (ILI9341_HEIGHT - 240) / 2, 240, 240, (const uint16_t*)test_img_240x240);
+//
+//    HAL_Delay(3000);
 
-    ILI9341_FillScreen(ILI9341_RED);
-    ILI9341_WriteString(0, 0, "RED", Font_11x18, ILI9341_BLACK, ILI9341_RED);
-    HAL_Delay(500);
+//    char str[8];
+//    for(long i=0;i<2000;i++)
+//    {
+    /*
+    	ILI9341_FillRectangle( \
+    			rand()%ILI9341_WIDTH, \
+				rand()%ILI9341_HEIGHT, \
+				rand()%ILI9341_WIDTH, \
+				rand()%ILI9341_HEIGHT, \
+				ILI9341_COLOR565(rand()%255,rand()%255,rand()%255));
+				*/
+//    	sprintf(str,"%ld ",i);
+//    	ILI9341_WriteString(0, 0, str, Font_7x10, ILI9341_RED, ILI9341_BLACK);
+//    }
+//    for(long i=0;i<100;i++)
+//    {
+    /*
+    	ILI9341_DrawLine( \
+    			rand()%ILI9341_WIDTH, \
+				rand()%ILI9341_HEIGHT, \
+				rand()%ILI9341_WIDTH, \
+				rand()%ILI9341_HEIGHT, \
+				ILI9341_COLOR565(rand()%255,rand()%255,rand()%255));
+				*/
+//    	sprintf(str,"%ld ",i);
+//    	ILI9341_WriteString(0, 0, str, Font_7x10, ILI9341_RED, ILI9341_BLACK);
+//    }
 
-    ILI9341_FillScreen(ILI9341_GREEN);
-    ILI9341_WriteString(0, 0, "GREEN", Font_11x18, ILI9341_BLACK, ILI9341_GREEN);
-    HAL_Delay(500);
 
-    ILI9341_FillScreen(ILI9341_CYAN);
-    ILI9341_WriteString(0, 0, "CYAN", Font_11x18, ILI9341_BLACK, ILI9341_CYAN);
-    HAL_Delay(500);
+//    float waveform[320];
+//  for(int timescale=2;timescale<16;timescale+=2)
+//  {
+//    for(int i=0;i<320;i++)
+//    {
+//    	waveform[i] = 120*sin(timescale*3.14/320*i)+120;
+//    }
+//    for(int x=0;x<320;x++)
+//    {
+//    	ILI9341_DrawPixel(x,waveform[x],ILI9341_COLOR565(255,0,0));
+//    }
+//  }
 
-    ILI9341_FillScreen(ILI9341_MAGENTA);
-    ILI9341_WriteString(0, 0, "MAGENTA", Font_11x18, ILI9341_BLACK, ILI9341_MAGENTA);
-    HAL_Delay(500);
+    int FFT_SIZE = 256;
+    float Inputbuf[1024];
+    arm_cfft_radix4_instance_f32 Base4fft;
+    float32_t maxValue;                /* Max FFT value is stored here */
+    uint32_t maxIndex;                /* Index in Output array where max value is */
+    //float Inputdata[1024];
+    float Outputdata[1024];
+    float Fs=256.0;
+  for(int c=1;c<20;c++){
+	  int k = (c<10)?c:(20-c);
+//	  ILI9341_FillScreen(ILI9341_BLACK);
+    for(int i=0;i<FFT_SIZE;i++)
+    {
+       Inputbuf[2*i]=120+
+      .1*120*arm_sin_f32(2*PI*k*i/Fs)+
+      .3*120*arm_sin_f32(2*PI*k*4*i/Fs)+
+      .5*120*arm_sin_f32(2*PI*k*8*i/Fs);
+      Inputbuf[2*i+1]=0;
+    }
+    float old_y;
+    for(int x=0;x<FFT_SIZE;x++)
+    {
+    	float y = 240-Inputbuf[x*2];
+    	if(x == 0){
+  	  ILI9341_DrawPixel(x,y,ILI9341_COLOR565(255,0,0));
+    	}else{
+    		ILI9341_DrawLine(x,y,x-1,old_y,ILI9341_COLOR565(0,255,0));
+    	}
+    	old_y = y;
+    }
+    for(int x=0;x<FFT_SIZE;x++)
+    {
+    	float y = 240-Inputbuf[x*2];
+    	if(x == 0){
+  	  ILI9341_DrawPixel(x,y,ILI9341_COLOR565(255,0,0));
+    	}else{
+    		ILI9341_DrawLine(x,y,x-1,old_y,ILI9341_COLOR565(0,0,0));
+    	}
+    	old_y = y;
+    }
+      arm_cfft_radix4_init_f32(&Base4fft,FFT_SIZE,0,1);
+      arm_cfft_radix4_f32(&Base4fft,Inputbuf);
+      arm_cmplx_mag_f32(Inputbuf,Outputdata,FFT_SIZE);
+      arm_max_f32(Outputdata, FFT_SIZE, &maxValue, &maxIndex);
 
-    ILI9341_FillScreen(ILI9341_YELLOW);
-    ILI9341_WriteString(0, 0, "YELLOW", Font_11x18, ILI9341_BLACK, ILI9341_YELLOW);
-    HAL_Delay(500);
+      for(int x=0;x<FFT_SIZE;x++)
+      {
+    	  float y = 240-Outputdata[x]*(240/maxValue);
+    	if(x==0){
+    	  ILI9341_DrawPixel(x,y,ILI9341_COLOR565(0,255,0));
+    	}else{
+    		ILI9341_DrawLine(x,y,x-1,old_y,ILI9341_COLOR565(255,0,0));
+    	}
+    	  old_y = y;
+      }
 
-    ILI9341_FillScreen(ILI9341_BLACK);
-    ILI9341_WriteString(0, 0, "BLACK", Font_11x18, ILI9341_WHITE, ILI9341_BLACK);
-    HAL_Delay(500);
-
-    ILI9341_DrawImage((ILI9341_WIDTH - 240) / 2, (ILI9341_HEIGHT - 240) / 2, 240, 240, (const uint16_t*)test_img_240x240);
-
-    HAL_Delay(3000);
-
-    ILI9341_FillScreen(ILI9341_BLACK);
-    ILI9341_WriteString(0, 0, "Touchpad test.  Draw something!", Font_11x18, ILI9341_WHITE, ILI9341_BLACK);
-    HAL_Delay(1000);
-    ILI9341_FillScreen(ILI9341_BLACK);
+      for(int x=0;x<FFT_SIZE;x++)
+      {
+    	  float y = 240-Outputdata[x]*(240/maxValue);
+    	if(x==0){
+    	  ILI9341_DrawPixel(x,y,ILI9341_COLOR565(0,255,0));
+    	}else{
+    		ILI9341_DrawLine(x,y,x-1,old_y,ILI9341_COLOR565(0,0,0));
+    	}
+    	  old_y = y;
+      }
+      HAL_Delay(100);
+ }
+//    HAL_Delay(6000);
+//    ILI9341_FillScreen(ILI9341_BLACK);
+//    ILI9341_WriteString(0, 0, "Touchpad test.  Draw something!", Font_11x18, ILI9341_WHITE, ILI9341_BLACK);
+//    HAL_Delay(1000);
+//    ILI9341_FillScreen(ILI9341_BLACK);
 
     if(HAL_SPI_DeInit(&hspi1) != HAL_OK) {
 //        UART_Printf("HAL_SPI_DeInit failed!\r\n");
         return;
     }
 
-    hspi1.Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_128;
+//    hspi1.Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_128;
 
     if(HAL_SPI_Init(&hspi1) != HAL_OK) {
 //        UART_Printf("HAL_SPI_Init failed!\r\n");
@@ -222,17 +337,17 @@ int main(void)
   while (1)
   {
 	  HAL_GPIO_WritePin(GPIOD, LD4_Pin|LD3_Pin|LD5_Pin|LD6_Pin , GPIO_PIN_SET);
-	  HAL_Delay(1000);
+	  HAL_Delay(300);
 	  HAL_GPIO_WritePin(GPIOD, LD4_Pin|LD3_Pin|LD5_Pin|LD6_Pin , GPIO_PIN_RESET);
-	  HAL_Delay(1000);
+	  HAL_Delay(300);
 	  HAL_GPIO_WritePin(GPIOD, LD4_Pin|LD3_Pin|LD5_Pin|LD6_Pin , GPIO_PIN_SET);
-	  HAL_Delay(1000);
+	  HAL_Delay(300);
 	  HAL_GPIO_WritePin(GPIOD, LD4_Pin|LD3_Pin|LD5_Pin|LD6_Pin , GPIO_PIN_RESET);
-	  HAL_Delay(1000);
+	  HAL_Delay(300);
 	  HAL_GPIO_WritePin(GPIOD, LD4_Pin|LD3_Pin|LD5_Pin|LD6_Pin , GPIO_PIN_SET);
-	  HAL_Delay(1000);
+	  HAL_Delay(300);
 	  HAL_GPIO_WritePin(GPIOD, LD4_Pin|LD3_Pin|LD5_Pin|LD6_Pin , GPIO_PIN_RESET);
-	  HAL_Delay(1000);
+	  HAL_Delay(300);
 
     /* USER CODE END WHILE */
     MX_USB_HOST_Process();

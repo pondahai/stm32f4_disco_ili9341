@@ -1,0 +1,9 @@
+/Drivers/
+/Middlewares/
+/Src/
+/ili9341/
+/makefile
+/objects.list
+/objects.mk
+/sources.mk
+/startup/
